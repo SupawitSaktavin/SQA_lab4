@@ -2,32 +2,37 @@ package Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import sqa.main.Ranking;
 
-class test_boundary {
+class test_robustness {
 	Ranking test = new Ranking();
 	
 	@ParameterizedTest
 	@CsvSource({
+	"-1,	4, 500, Standard",
 	"0,		4, 500, Standard",
 	"1,		4, 500, Standard",
 	"50000,	4, 500, Standard",
 	"99999,	4, 500, Standard",
 	"100000,4, 500, Standard",
+	"100001,4, 500, Standard",
 	
+	"50000, -1, 500, Standard",
 	"50000, 0, 500, Standard",
 	"50000, 1, 500, Standard",
+	"50000, 6, 500, Standard",
 	"50000, 7, 500, Standard",
 	"50000, 8, 500, Standard",
 	
+	"50000, 4, -1, Standard",
 	"50000, 4, 0, Standard",
 	"50000, 4, 1, Standard",
 	"50000, 4, 999, Standard",
 	"50000, 4, 1000, Standard",
+	"50000, 4, 1001, Standard",
 	})
 	void testBoundary(int purchaseTotal, int frequency, int pointCollected, String result) {
 		assertEquals(result, test.CalculateMembershipRank(purchaseTotal, frequency, pointCollected));
