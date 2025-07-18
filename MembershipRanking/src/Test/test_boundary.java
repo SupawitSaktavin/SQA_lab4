@@ -2,14 +2,23 @@ package Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import sqa.main.Ranking;
 
 class test_boundary {
-	Ranking test = new Ranking();
 	
+	Ranking test;
+	
+	@BeforeEach
+	public void setUp() throws Exception {
+		test = new Ranking();
+	}
+	
+	@DisplayName("Normal boundary value testing")
 	@ParameterizedTest
 	@CsvSource({
 	"0,		4, 500, Standard",
@@ -28,8 +37,8 @@ class test_boundary {
 	"50000, 4, 999, Gold",
 	"50000, 4, 1000, Gold"
 	})
-	void testBoundary(int purchaseTotal, int frequency, int pointCollected, String result) {
-		assertEquals(result, test.CalculateMembershipRank(purchaseTotal, frequency, pointCollected));
+	void testBoundary(int purchaseTotal, int frequency, int pointCollected, String expected) {
+		assertEquals(expected, test.CalculateMembershipRank(purchaseTotal, frequency, pointCollected));
 	}
 
 }
